@@ -12,4 +12,8 @@
   </div>
 </div>
 
+<a *ngFor="let entrie of entries" class="item">
+<div class="header">{{entrie?.title }}</div>
+</a>
+
 <button (click)="showPadletList()" class="ui green button">Zurück zur Padletliste</button>
