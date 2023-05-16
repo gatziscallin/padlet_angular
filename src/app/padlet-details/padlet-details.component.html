@@ -1,0 +1,15 @@
+<div class="ui grid" *ngIf="padlet">
+
+  <div class="twelve wide column">
+    <h1 class="ui header">{{ padlet.name }}</h1>
+    <div class="ui divider"></div>
+    <div class="ui grid">
+      <div class="four wide column">
+        <h4 class="ui header">ID: </h4>
+        {{ padlet.id }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<button (click)="showPadletList()" class="ui green button">Zurück zur Padletliste</button>
