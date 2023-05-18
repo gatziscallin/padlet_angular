@@ -14,9 +14,7 @@ export class PadletListComponent implements OnInit {
   constructor(private ps: PadletService) {
   }
 
-  @Output() showDetailsEvent = new EventEmitter<Padlet>();
-
   ngOnInit() {
-    this.padlets = this.ps.getAllPadlets();
+    this.ps.getAllPadlets().subscribe(res=>this.padlets = res);
   }
 }

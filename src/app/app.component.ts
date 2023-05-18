@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Padlet} from "./shared/padlet";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'bs-root',
@@ -7,19 +8,11 @@ import {Padlet} from "./shared/padlet";
   styles: []
 })
 export class AppComponent {
-  listOn = true;
-  detailsOn = false;
 
   padlet : Padlet | undefined;
 
-  showList() {
-    this.listOn = true;
-    this.detailsOn = false;
-  }
-  showDetails(padlet: Padlet) {
-    this.padlet = padlet;
-    this.listOn = false;
-    this.detailsOn = true;
+  constructor(private http: HttpClient){
+    http.get<Padlet>('http://padlet.s2010456018.student.kwmhgb.at/padlets').subscribe(val => this.padlet = val);
   }
 
 }

@@ -1,46 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Padlet, User } from "./padlet";
+import {Padlet, User} from "./padlet";
 import {Entrie} from "./entrie";
+import {HttpClient} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
+import {catchError, retry} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class PadletService {
-  padlets: Padlet[];
-  entries: Entrie[];
+  private api = 'http://padlet.s2010456018.student.kwmhgb.at/api';
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    this.padlets = [
-      new Padlet(1,
-        'Web',
-        true,
-        new User(1,"Antonia","Kriegner","antonia@kriegner.at","secret","url"),
-      ),
-      new Padlet(2,
-        'Kommunikation',
-        false,
-        new User(4,"Tobias","Ratzberger","tobi@ratz.at","secret","url"),
-      )
-    ],
-      this.entries = [
-        new Entrie(
-          1, new User(3,'Susi', 'Huber', 'test@test.at', 'secret', 'https://i.pi'),
-          1,'Titel Entrie 1', 'content'),
-        new Entrie(
-          2, new User(4,'Susi', 'Huber', 'test@test.at', 'secret', 'https://i.pi'),
-          1,'Titel Entrie 2', 'content'),
-      ]
+  getAllPadlets(): Observable<Array<Padlet>>{
+    return this.http.get<Array<Padlet>>(`${this.api}/padlets`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getAllPadlets() {
-    return this.padlets;
+  getSinglePadlet(id:number) : Observable<Padlet>{
+    return this.http.get<Padlet>(`${this.api}/padlets/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getAllEntries(id:number) : Entrie[]{
-    return <Array<Entrie>>this.entries.filter(entrie=>entrie.padlet_id == id);
+  getAllEntries(id:number) : Observable<Entrie[]>{
+    return this.http.get<Entrie[]>(`${this.api}/padlets/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getSinglePadlet(id:number) : Padlet {
-    return <Padlet>this.padlets.find(padlet => padlet.id == id);
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }
