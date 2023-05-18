@@ -1,17 +1,16 @@
-<div class="ui grid" *ngIf="padlet">
-  <div class="twelve wide column">
-    <h1 class="ui header">{{ padlet.name }}</h1>
-    <div class="ui divider"></div>
-    <div class="ui grid">
-      <div class="four wide column">
-        <h4 class="ui header">Owner ID: {{ padlet.id }}</h4>
-      </div>
-    </div>
+<div class="content">
+  <div class="header">{{ padlet?.name }}</div>
+  <div class="metadata">
+    <div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
   </div>
+  <div class="extra">ID: {{ padlet?.id }}</div>
 </div>
 
-<a *ngFor="let entrie of entries" class="item">
-  <div class="header">{{entrie?.title }}</div>
-</a>
+<div *ngFor="let entrie of entries" class="item">
+  <div class="header title">{{entrie?.title }}</div>
+  <div class="header">{{entrie?.content }}</div>
+  <div class="ui divider"></div>
+</div>
+
 
 <button [routerLink] = "'/padlets'" class="ui green button">Zurück zur Padletliste</button>

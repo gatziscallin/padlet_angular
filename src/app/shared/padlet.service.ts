@@ -4,6 +4,7 @@ import {Entrie} from "./entrie";
 import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs";
+import {Rating} from "./rating";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getAllEntries(id:number) : Observable<Entrie[]>{
-    return this.http.get<Entrie[]>(`${this.api}/padlets/${id}`)
+  getAllEntries(id:number) : Observable<Array<Entrie>>{
+    return this.http.get<Array<Entrie>>(`${this.api}/padlets`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
