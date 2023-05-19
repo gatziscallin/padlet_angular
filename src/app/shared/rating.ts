@@ -1,12 +1,13 @@
 import { User } from "./user";
-import {Entrie} from "./entrie";
+import { Entrie } from "./entrie";
 export { User } from "./user";
-export {Entrie} from "./entrie";
+export { Entrie } from "./entrie";
 
 export class Rating {
   constructor(
-    public user_id:User,
-    public entrie_id:Entrie,
-    public rating:number
+    public user_id: number,
+    public user: User,
+    public entrie: Entrie,
+    public rating: number
   ) {}
 }

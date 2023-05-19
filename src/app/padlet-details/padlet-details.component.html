@@ -1,16 +1,21 @@
-<div class="content">
-  <div class="header">{{ padlet?.name }}</div>
-  <div class="metadata">
-    <div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<div class="header"><h1>{{ padlet?.name }}</h1></div>
+<div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<br>
+<div *ngFor="let entrie of entries" class="item ui card">
+  <div class="content">
+    <div class="header"><b>{{entrie?.title }}</b></div>
+    <!-- Vor- und Nachname + Erstelldatum-->
+    <div class="description">{{entrie?.content }}</div>
   </div>
-  <div class="extra">ID: {{ padlet?.id }}</div>
+  <!-- Kommentare und Ratings ausgeben-->
+  <div *ngFor="let rating of entrie.ratings" class="extra content">
+    <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+    <div class="ui star rating" *ngIf="rating.rating">
+      <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
+    </div>
+    <div *ngFor="let c of entrie.comments">
+      <div class="extra" *ngIf="rating.user.id == c.user.id">{{c.comment}}</div>
+    </div>
+  </div>
 </div>
-
-<div *ngFor="let entrie of entries" class="item">
-  <div class="header title">{{entrie?.title }}</div>
-  <div class="header">{{entrie?.content }}</div>
-  <div class="ui divider"></div>
-</div>
-
-
-<button [routerLink] = "'/padlets'" class="ui green button">Zurück zur Padletliste</button>
+<button [routerLink]="'/padlets'" class="ui blue button">Zurück zur Padletliste</button>

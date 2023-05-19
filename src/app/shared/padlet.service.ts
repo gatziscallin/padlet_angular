@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs";
 import {Rating} from "./rating";
+import {Comment} from "./comment";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,33 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getAllEntries(id:number) : Observable<Array<Entrie>>{
-    return this.http.get<Array<Entrie>>(`${this.api}/padlets`)
+  getAllEntries() : Observable<Array<Entrie>>{
+    return this.http.get<Array<Entrie>>(`${this.api}/entries`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getSingleEntrie(padlet_id:number, entrie_id: number) : Observable<Entrie>{
+    return this.http.get<Entrie>(`${this.api}/padlets/${padlet_id}/entries/${entrie_id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUser() : Observable<User[]>{
+    return this.http.get<User>(`${this.api}/padlets`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUserById(id: number) : Observable<User>{
+    return this.http.get<User>(`${this.api}/users/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getRatingsForEntrie(id: number) : Observable<Array<Rating>> {
+    return this.http.get<Array<Rating>>(`${this.api}/entries/${id}/ratings`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getCommentsForEntrie(id: number) : Observable<Array<Comment>> {
+    return this.http.get<Array<Comment>>(`${this.api}/entries/${id}/comments`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
