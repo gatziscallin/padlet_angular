@@ -1,0 +1,35 @@
+<h1>Padlet bearbeiten / erstellen</h1>
+<form class="ui large form" [formGroup]="padletForm"
+      (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="action" value="">
+
+  <div class="field">
+    <label>Padlet Name</label>
+    <input formControlName="name">
+    <div *ngIf="errors['name']" class="ui negative message"> {{
+      errors['name'] }} </div>
+  </div>
+
+  <div class="field" [class.disabled]="true">
+    <label>Padlet ID</label>
+    <input formControlName="id">
+    <div *ngIf="errors['id']" class="ui negative message">{{
+      errors['id'] }} </div>
+  </div>
+
+  <div class="field" [class.disabled]="padlet.user_id">
+    <label>Eigentümer*in ID</label>
+    <input formControlName="user_id">
+    <div *ngIf="errors['user_id']" class="ui negative message">{{
+      errors['user_id'] }} </div>
+  </div>
+
+  <div class="field">
+    <label>Status (öffentlich/privat)</label>
+    <input formControlName="is_public">
+  </div>
+
+  <button type="submit" class="ui button"
+          [disabled]="padletForm.invalid">Speichern</button>
+</form>

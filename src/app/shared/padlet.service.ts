@@ -55,6 +55,22 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  savePadlet (padlet: Padlet): Observable<any> {
+    return this.http.post(`${this.api}/padlets`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+
+  }
+
+  updatePadlet (padlet: Padlet): Observable<any> {
+    return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  deletePadlet (id: number): Observable<any> {
+    return this.http.delete(`${this.api}/padlets/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }

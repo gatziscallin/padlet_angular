@@ -1,21 +1,54 @@
-<div class="header"><h1>{{ padlet?.name }}</h1></div>
-<div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<div class="header">
+  <h1>{{ padlet?.name }}</h1>
+</div>
+<div class="content">
+  Ersteller*in: {{ padlet?.user?.firstName }} {{ padlet?.user?.lastName }}
+</div>
+<div class="container">
+  Erstellt am: {{ padlet?.created_at | date:'dd.MM.yyyy' }}
+</div>
 <br>
-<div *ngFor="let entrie of entries" class="item ui card">
+<div *ngFor="let entry of entries" class="item ui card">
   <div class="content">
-    <div class="header"><b>{{entrie?.title }}</b></div>
-    <!-- Vor- und Nachname + Erstelldatum-->
-    <div class="description">{{entrie?.content }}</div>
+    <div class="header"><b>{{ entry?.title }}</b></div>
+    <div class="description">
+      {{ entry?.content }}
+      <a *ngIf="authService.isLoggedIn()" class="ui tiny yellow labeled icon button"
+         [routerLink]="['../../admin/padlets', padlet.id, 'entries', entry.id]">
+        <i class="write icon"></i> Entrie bearbeiten
+      </a>
+      <a *ngIf="authService.isLoggedIn()" class="ui tiny yellow labeled icon button"
+         [routerLink]="['../../admin', padlet.id]">
+        <i class="add icon"></i> Kommentar schreiben
+      </a>
+      <button *ngIf="authService.isLoggedIn()" class="ui tiny red labeled icon button" (click)="deleteEntrie(entry.id)">
+        <i class="trash alternate icon"></i> Eintrag löschen
+      </button>
+    </div>
+    <br>
+    <div class="container right aligned">
+      Erstellt am: {{ entry?.created_at | date:'dd.MM.yyyy' }}
+    </div>
   </div>
-  <!-- Kommentare und Ratings ausgeben-->
-  <div *ngFor="let rating of entrie.ratings" class="extra content">
-    <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+  <div *ngFor="let rating of entry.ratings" class="extra content">
+    <div class="extra">{{ rating.user.firstName }} {{ rating.user.lastName }}:</div>
     <div class="ui star rating" *ngIf="rating.rating">
       <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
     </div>
-    <div *ngFor="let c of entrie.comments">
-      <div class="extra" *ngIf="rating.user.id == c.user.id">{{c.comment}}</div>
+    <div *ngFor="let comment of entry.comments">
+      <div class="extra" *ngIf="rating.user.id == comment.user.id">{{ comment.comment }}</div>
     </div>
   </div>
 </div>
-<button [routerLink]="'/padlets'" class="ui blue button">Zurück zur Padletliste</button>
+<a class="ui tiny yellow labeled icon button"
+   [routerLink]="['../../admin/padlets', padlet.id, 'entries']">
+  <i class="add icon"></i> Neuen Eintrag erstellen
+</a>
+<a *ngIf="authService.isLoggedIn()" class="ui tiny yellow labeled icon button"
+   [routerLink]="['../../admin', padlet.id]">
+  <i class="write icon"></i> Padlet bearbeiten
+</a>
+<button *ngIf="authService.isLoggedIn()" class="ui tiny red labeled icon button" (click)="deletePadlet()">
+  <i class="trash alternate icon"></i> Padlet löschen
+</button>
+<button [routerLink]="'/padlets'" class="ui tiny blue button">Zurück zur Padletliste</button>

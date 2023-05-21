@@ -6,7 +6,7 @@ export class EntrieFactory {
 
   static empty() : Entrie{
 
-    return new Entrie(1,1, 1, 'Title', 'Content', [], []);
+    return new Entrie('',1, 1, '', '', new Date(),[], []);
   }
   static fromObject(rawEntrie: any) : Entrie{
     return new Entrie(
@@ -15,6 +15,7 @@ export class EntrieFactory {
       rawEntrie.padlet_id,
       rawEntrie.title,
       rawEntrie.content,
+      rawEntrie.created_at,
       rawEntrie.rating,
       rawEntrie.comment
     );
