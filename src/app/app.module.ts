@@ -16,6 +16,8 @@ import {AuthenticationService} from "./shared/authentication.service";
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptorService} from "./shared/token-interceptor.service";
 import {JwtInterceptorService} from "./shared/jwt-interceptor.service";
+import { CommentFormComponent } from './comment-form/comment-form.component';
+import { RatingFormComponent } from './rating-form/rating-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {JwtInterceptorService} from "./shared/jwt-interceptor.service";
     PadletDetailsComponent,
     PadletFormComponent,
     EntrieFormComponent,
-    LoginComponent
+    LoginComponent,
+    CommentFormComponent,
+    RatingFormComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule

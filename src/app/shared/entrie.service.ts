@@ -3,7 +3,8 @@ import {catchError, Observable, throwError, retry} from "rxjs";
 import {Padlet} from "./padlet";
 import {Entrie} from "./entrie";
 import {HttpClient} from "@angular/common/http";
-
+import {Rating} from "./rating";
+import {Comment} from "./comment";
 
 
 @Injectable({
@@ -33,6 +34,27 @@ export class EntrieService {
   deleteEntrie (id: number): Observable<any> {
     return this.http.delete(`${this.api}/entries/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  saveComment (comment: Comment): Observable<any> {
+    return this.http.post(`${this.api}/entries/${comment.entrie_id}/comments`, comment)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getSingleComment(id:number) : Observable<Comment>{
+    return this.http.get<Comment>(`${this.api}/entries/${id}/comments`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  saveRating (rating: Rating): Observable<any> {
+    console.log(rating);
+    return this.http.post(`${this.api}/entries/${rating.entrie_id}/ratings`, rating)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getSingleRating(entrie_id:number) : Observable<Comment>{
+    return this.http.get<Rating>(`${this.api}/entries/${entrie_id}/ratings`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
   private errorHandler(error: Error | any): Observable<any> {

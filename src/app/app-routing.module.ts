@@ -6,6 +6,8 @@ import {PadletFormComponent} from "./padlet-form/padlet-form.component";
 import {EntrieFormComponent} from "./entrie-form/entrie-form.component";
 import {LoginComponent} from "./login/login.component";
 import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
+import {CommentFormComponent} from "./comment-form/comment-form.component";
+import {RatingFormComponent} from "./rating-form/rating-form.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'padlets', pathMatch: 'full' },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'admin/:id', component: PadletFormComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'admin/padlets/:padlet_id/entries', component: EntrieFormComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'admin/padlets/:padlet_id/entries/:id', component: EntrieFormComponent, canActivate:[CanNavigateToAdminGuard] },
+  { path: 'admin/padlets/:padlet_id/entries/:entrie_id/comments', component: CommentFormComponent, canActivate:[CanNavigateToAdminGuard] },
+  { path: 'admin/padlets/:padlet_id/entries/:entrie_id/ratings', component: RatingFormComponent, canActivate:[CanNavigateToAdminGuard] },
   { path: 'login', component: LoginComponent }
 ];
 

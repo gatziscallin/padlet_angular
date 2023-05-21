@@ -1,0 +1,29 @@
+<h1>Rating erstellen</h1>
+<form class="ui large form" [formGroup]="ratingForm"
+      (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+
+  <div class="field">
+    <label>Rating</label>
+    <input formControlName="rating">
+    <div *ngIf="errors['rating']" class="ui negative message"> {{
+      errors['rating'] }} </div>
+  </div>
+
+  <div class="field" [class.disabled]="true">
+    <label>ID des Eintrags</label>
+    <input formControlName="entrie_id">
+    <div *ngIf="errors['entrie_id']" class="ui negative message">{{
+      errors['entrie_id'] }} </div>
+  </div>
+
+  <div class="field" [class.disabled]="true">
+    <label>ID des Users</label>
+    <input formControlName="user_id">
+    <div *ngIf="errors['user_id']" class="ui negative message">{{
+      errors['user_id'] }} </div>
+  </div>
+
+  <button type="submit" class="ui button"
+          [disabled]="ratingForm.invalid">Speichern</button>
+</form>
