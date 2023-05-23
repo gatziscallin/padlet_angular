@@ -12,6 +12,10 @@ import {EntrieFormErrorMessages} from "../entrie-form/entrie-form-error-messages
   styles: [
   ]
 })
+
+/*
+  Diese Komponente ist die Formverarbeitung zum Erstellen/Bearbeiten/Löschen eines Eintrags
+ */
 export class EntrieFormComponent {
 
   entryForm: FormGroup;
@@ -28,6 +32,16 @@ export class EntrieFormComponent {
     this.entryForm = this.fb.group({});
   }
 
+  /*
+    Initialisierung des Eintrages
+
+      Wenn eine id vorhanden ist, wird über den ps.getSingleEntrie(id)-Aufruf ein HTTP-Anfrage an den Server gesendet,
+      um den einzelnen Eintrag abzurufen. Das Ergebnis der Anfrage wird über den subscribe()-Aufruf verarbeitet. Ist
+      bereits ein Eintrag vorhanden wird isUpdatingEntrie auf true gesetzt.
+
+      Schließlich wird die Methode initEntrie() unabhängig davon, ob eine id vorhanden war oder nicht, erneut
+      aufgerufen, um sicherzustellen, dass der Eintrag richtig initialisiert wird.
+   */
   ngOnInit(): void {
     const id = this.route.snapshot.params["id"];
     if(id){
@@ -42,6 +56,9 @@ export class EntrieFormComponent {
     this.initEntrie();
   }
 
+  /*
+    Die Werte der Formularkontrollen werden mit den entsprechenden Werten und Validatoren des entrie-Objekts vorbelegt.
+   */
   initEntrie() {
     this.entryForm = this.fb.group({
       id: this.entrie.id,
@@ -50,10 +67,17 @@ export class EntrieFormComponent {
       title: [this.entrie.title, Validators.required],
       content: [this.entrie.content, Validators.required]
     });
+    // Bei Änderungen wird die Methode updateErrorMessages() aufgerufen, um eventuelle
+    // Fehlermeldungen zu aktualisieren
     this.entryForm.statusChanges.subscribe(()=>
       this.updateErrorMessages());
   }
 
+  /*
+  Fehlermeldungen für das Formular werden basierend auf den Validierungsregeln und den aktuellen Formulareingaben
+  angelegt. Die Fehlermeldungen können dann verwendet werden, um den Benutzer über ungültige Eingaben
+  zu informieren und Feedback zu geben.
+ */
   updateErrorMessages() {
     console.log("Is form invalid? " + this.entryForm.invalid);
     this.errors = {};

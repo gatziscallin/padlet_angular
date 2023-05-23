@@ -12,6 +12,10 @@ import {RatingFormErrorMessages} from "../rating-form/rating-form-error-messages
   styles: [
   ]
 })
+
+/*
+  Diese Komponente ist die Formverarbeitung zum Erstellen eines Ratings
+ */
 export class RatingFormComponent {
   ratingForm: FormGroup;
   rating: Rating = RatingFactory.empty();
@@ -26,6 +30,15 @@ export class RatingFormComponent {
     this.ratingForm = this.fb.group({});
   }
 
+  /*
+    Initialisierung des Ratings
+
+      Wenn eine id vorhanden ist, wird über den ps.getSingleRating(entrie_id)-Aufruf ein HTTP-Anfrage an den Server gesendet,
+      um den einzelnen Eintrag abzurufen. Das Ergebnis der Anfrage wird über den subscribe()-Aufruf verarbeitet.
+
+      Schließlich wird die Methode initRating() unabhängig davon, ob eine id vorhanden war oder nicht, erneut
+      aufgerufen, um sicherzustellen, dass das Rating richtig initialisiert wird.
+   */
   ngOnInit(): void {
     const entrie_id = this.route.snapshot.params["entrie_id"];
     if(entrie_id){
@@ -39,6 +52,9 @@ export class RatingFormComponent {
     this.initRating();
   }
 
+  /*
+    Die Werte der Formularkontrollen werden mit den entsprechenden Werten und Validatoren des rating-Objekts vorbelegt.
+   */
   initRating() {
     this.ratingForm = this.fb.group({
       id:this.rating.id,
@@ -46,10 +62,17 @@ export class RatingFormComponent {
       entrie_id: [this.route.snapshot.params["entrie_id"], Validators.required],
       rating: [this.rating.rating, Validators.required]
     });
+    // Bei Änderungen wird die Methode updateErrorMessages() aufgerufen, um eventuelle
+    // Fehlermeldungen zu aktualisieren
     this.ratingForm.statusChanges.subscribe(()=>
       this.updateErrorMessages());
   }
 
+  /*
+  Fehlermeldungen für das Formular werden basierend auf den Validierungsregeln und den aktuellen Formulareingaben
+  angelegt. Die Fehlermeldungen können dann verwendet werden, um den Benutzer über ungültige Eingaben
+  zu informieren und Feedback zu geben.
+ */
   updateErrorMessages() {
     console.log("Is form invalid? " + this.ratingForm.invalid);
     this.errors = {};
@@ -69,9 +92,12 @@ export class RatingFormComponent {
     }
   }
 
+  /*
+  Speichert neues Rating in die Datenbank und verlinkt auf das jeweilige Padlet zurück, wo das Rating
+  angelegt worden ist.
+ */
   submitForm() {
     const rating: Rating = RatingFactory.fromObject(this.ratingForm.value);
-    console.log("Rating anlegen");
     this.ps.saveRating(rating).subscribe(res => {
       this.rating = RatingFactory.empty();
       this.ratingForm.reset(RatingFactory.empty());

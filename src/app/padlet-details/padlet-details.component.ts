@@ -32,9 +32,15 @@ export class PadletDetailsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public authService: AuthenticationService
-  ) {
-  }
+  ) {}
 
+  /**
+   * Die Funktion ngOnInit() wird beim Initialisieren der Komponente aufgerufen.
+   * Sie ruft die Methode getSinglePadlet() des ps (PadletService) auf, um das einzelne Padlet abzurufen..
+   * Das zurückgegebene Padlet wird subscribed und die Daten werden in den entsprechenden Variablen gespeichert.
+   * Die Einträge des Padlets werden der Variable entries zugewiesen und der Benutzer des Padlets wird der Variable user zugewiesen.
+   * Anschließend werden die Methoden getRatings() und getComments() aufgerufen, um die Bewertungen und Kommentare des Entries abzurufen.
+   */
   ngOnInit() {
     const params = this.route.snapshot.params;
     this.ps.getSinglePadlet(params['id'])
@@ -47,6 +53,11 @@ export class PadletDetailsComponent implements OnInit {
       });
   }
 
+  /**
+   * Die Funktion getRatings() wird verwendet, um die Bewertungen für jeden Eintrag des Padlets abzurufen.
+   * Für jeden Eintrag wird die Methode getRatingsForEntrie() des ps (PadletService) aufgerufen, um die Bewertungen für
+   * den jeweiligen Eintrag abzurufen.
+   */
   getRatings() : void {
     for(let entrie of this.entries) {
       this.ps.getRatingsForEntrie(Number(entrie.id)).subscribe((res: Rating[]) => {
@@ -55,6 +66,11 @@ export class PadletDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * Die Funktion getComments() wird verwendet, um die Kommentare für jeden Eintrag des Padlets abzurufen.
+   * Für jeden Eintrag wird die Methode getCommentsForEntrie() des ps (PadletService) aufgerufen, um die Bewertungen für
+   * den jeweiligen Eintrag abzurufen.
+   */
   getComments() : void {
     for (let entrie of this.entries) {
       this.ps.getCommentsForEntrie(Number(entrie.id)).subscribe((res: Comment[]) => {
@@ -63,10 +79,18 @@ export class PadletDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * Durchläuft die Ratings zum jeweilen Entrie und gibt sie als Array zurück
+   */
   getRating(rating: number) {
     return Array(rating)
   }
 
+  /**
+   * Bestätigungsnachricht, um sicherzustellen, dass der Benutzer das Padlet wirklich löschen möchte.
+   * Anschließend wird die deletePadlet()-Methode des ps (PadletService) aufgerufen und der entsprechende Parameter übergeben, um das Padlet zu löschen.
+   * Das Ergebnis wird subscribed und im Erfolgsfall wird zur vorherigen Seite navigiert, indem die Route entsprechend angepasst wird.
+   */
   deletePadlet(){
     if (confirm('Padlet wirklich löschen?')) {
       const params = this.route.snapshot.params;
@@ -79,6 +103,12 @@ export class PadletDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * Bestätigungsnachricht, um sicherzustellen, dass der Benutzer den Eintrag wirklich löschen möchte.
+   * Falls die Bestätigung erfolgt, wird die deleteEntrie()-Methode des es (EntrieService) aufgerufen und die
+   * entsprechende ID des Eintrags übergeben, um den Eintrag zu löschen.
+   * Das Ergebnis wird subscribed und im Erfolgsfall wird eine Umleitung auf die aktuelle Seite durchgeführt.
+   */
   deleteEntrie(id:string){
     if (confirm('Eintrag wirklich löschen?')) {
       this.es.deleteEntrie(Number(id)).subscribe(

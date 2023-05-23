@@ -10,6 +10,14 @@ import { tap } from 'rxjs/operators';
 export class JwtInterceptorService implements HttpInterceptor {
   constructor() {}
 
+  /**
+   * Wenn das empfangene Ereignis eine HttpResponse ist, können spezifische Aktionen ausführt werden.
+   * Wenn das empfangene Ereignis eine HttpErrorResponse ist, können Fehler behandelt werden, die während der Kommunikation
+   * mit dem Server auftreten. Im speziellen Fall einer 401-Fehlerantwort (Unauthorized) wird eine Benachrichtigung angezeigt,
+   * dass der Benutzername oder das Passwort inkorrekt ist.
+   * @param request
+   * @param next
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {

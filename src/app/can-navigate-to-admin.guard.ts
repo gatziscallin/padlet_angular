@@ -10,6 +10,13 @@ export class CanNavigateToAdminGuard implements CanActivate {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
+  /**
+   * Guard Funktion - Checkt ob der Nutzer eingeloggt ist, andernfalls kann der Link nicht geöffnet werden und man wird
+   * zurückgeleitet
+   * @param next
+   * @param state
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

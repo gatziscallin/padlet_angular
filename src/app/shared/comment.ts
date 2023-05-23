@@ -11,6 +11,7 @@ export class Comment {
     public user: User,
     public entrie_id: number,
     public entrie: Entrie,
-    public comment: string
+    public comment: string,
+    public create_date: Date
   ) {}
 }

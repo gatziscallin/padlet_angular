@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({});
   }
 
+  /**
+    Initialwerte werden gesetzt und Validatoren vergeben
+   */
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ["", [Validators.required, Validators.email]],
@@ -34,6 +37,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   login() überprüft, ob sowohl der Benutzername als auch das Passwort im Formularfeld angegeben wurden.
+   Wenn beide Felder ausgefüllt sind, wird die login()-Methode des authService aufgerufen.
+   Falls die Anmeldung erfolgreich ist, wird der Zugriffstoken im Session Storage gespeichert
+   und der Benutzer wird zur Startseite umgeleitet.
+   */
   login() {
     const val = this.loginForm.value;
     if (val.username && val.password) {
@@ -45,10 +54,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Gibt an, ob der Benutzer angemeldet ist
+   */
   isLoggedIn() {
     return this.authService.isLoggedIn();
   }
 
+  /**
+   * Loggt den Nutzer über den Authentication Service aus
+   */
   logout() {
     this.authService.logout();
   }

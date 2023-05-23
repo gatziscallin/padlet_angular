@@ -10,15 +10,34 @@ import {CommentFormComponent} from "./comment-form/comment-form.component";
 import {RatingFormComponent} from "./rating-form/rating-form.component";
 
 const routes: Routes = [
+  // Home - wird redirectet zu /padlets
   { path: '', redirectTo: 'padlets', pathMatch: 'full' },
+
+  // Startseite mit der Padletliste
   { path: 'padlets', component: PadletListComponent },
+
+  // Ein bestimmtes Padlet mit seinen Einträgen und Comments/Ratings
   { path: 'padlets/:id', component: PadletDetailsComponent },
-  { path: 'admin', component: PadletFormComponent, canActivate:[CanNavigateToAdminGuard] }, //guard geschütze Route
+
+  // Neues Padlet anlegen - durch Guard geschützte Route
+  { path: 'admin', component: PadletFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Padlet bearbeiten - durch Guard geschützte Route
   { path: 'admin/:id', component: PadletFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Neuen Eintrag anlegen - durch Guard geschützte Route
   { path: 'admin/padlets/:padlet_id/entries', component: EntrieFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Eintrag bearbeiten - durch Guard geschützte Route
   { path: 'admin/padlets/:padlet_id/entries/:id', component: EntrieFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Neuen Kommentar anlegen - durch Guard geschützte Route
   { path: 'admin/padlets/:padlet_id/entries/:entrie_id/comments', component: CommentFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Neues Rating anlegen - durch Guard geschützte Route
   { path: 'admin/padlets/:padlet_id/entries/:entrie_id/ratings', component: RatingFormComponent, canActivate:[CanNavigateToAdminGuard] },
+
+  // Login
   { path: 'login', component: LoginComponent }
 ];
 

@@ -6,7 +6,7 @@ export class CommentFactory {
 
   static empty() : Comment{
     return new Comment(1, 1, new User(1,'', '', '', '', ''),
-      1,new Entrie('',1,1,'','',new Date(),[],[]),'');
+      1,new Entrie('',1,1,'','',new Date(),[],[]),'', new Date());
   }
 
 
@@ -17,7 +17,8 @@ export class CommentFactory {
       rawComment.User,
       rawComment.entrie_id,
       rawComment.Entrie,
-      rawComment.comment
+      rawComment.comment,
+      rawComment.Date
     );
   }
 }

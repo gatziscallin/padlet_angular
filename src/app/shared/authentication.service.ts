@@ -20,7 +20,11 @@ export class AuthenticationService {
 
   constructor (private http: HttpClient) { }
 
-
+  /**
+   * Login mit den im Formular verwendeten Daten
+   * @param email
+   * @param password
+   */
   login (email: string, password: string) {
     return this.http.post(`${this.api}/login`, {
       email: email,
@@ -28,7 +32,9 @@ export class AuthenticationService {
     });
   }
 
-  // die Methode nimmt Token und speichert in in Session Storage vom Browser
+  /**
+   * nimmt Token und speichert ihn in Session Storage vom Browser
+   */
   public setSessionStorage (token: string) {
     console.log("saving token");
     console.log(jwt_decode(token));
@@ -37,6 +43,9 @@ export class AuthenticationService {
     sessionStorage.setItem("userId", decodedToken.user.id);
   }
 
+  /**
+   * Entfernt Token aus dem Session Storage
+   */
   public logout() {
     this.http.post(`${this.api}/logout`, {});
     sessionStorage.removeItem("token");
@@ -44,6 +53,9 @@ export class AuthenticationService {
     console.log("logged out");
   }
 
+  /**
+   * Gibt zurück, ob gerade ein Nutzer angemeldet ist. Und liefert zurück, ob das expirationDate vom token noch aktuell ist
+   */
   public isLoggedIn() : boolean {
     if (sessionStorage.getItem("token")) {
       let token: string = <string>sessionStorage.getItem("token");
@@ -61,6 +73,9 @@ export class AuthenticationService {
     }
   }
 
+  /**
+   * Liefert zurück, ob der Nutzer ausgeloggt ist
+   */
   public isLoggedOut() : boolean {
     return !this.isLoggedIn();
   }

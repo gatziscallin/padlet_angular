@@ -12,6 +12,9 @@ export class AppComponent {
 
   padlet : Padlet | undefined;
 
+  /**
+   * Angefragte Padlets erhalten
+   */
   constructor(private http: HttpClient, private authService: AuthenticationService){
     http.get<Padlet>('http://padlet.s2010456018.student.kwmhgb.at/padlets').subscribe(val => this.padlet = val);
   }
@@ -19,6 +22,7 @@ export class AppComponent {
   isLoggedIn() {
     return this.authService.isLoggedIn();
   }
+
   getLoginLabel(){
     if(this.isLoggedIn()){
       return "Logout";

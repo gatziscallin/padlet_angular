@@ -1,8 +1,6 @@
-<div class="content">
-  <div class="header">{{ padlet?.name }}</div>
-  <div class="metadata">
-    <div class="content">User: {{ padlet?.user_id}}</div>
-  </div>
-  <div class="extra">ID: {{ padlet?.id }}</div>
-  <div class="ui label">{{ padlet?.is_public ? "öffentlich" : "privat" }}</div>
+<div class="card">
+  <div class="card-title h5">{{ padlet?.name }}</div>
+    <div class="card-text">Ersteller*in: {{ padlet?.user?.firstName }} {{ padlet?.user?.lastName }}</div>
+    <div class="card-footer">ID: {{ padlet?.id }}</div>
+    <div class="">{{ padlet?.is_public ? "öffentlich" : "privat" }}</div>
 </div>

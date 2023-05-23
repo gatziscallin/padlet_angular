@@ -1,23 +1,23 @@
-<div class="ui middle aligned selection divided list">
-  <div *ngFor="let padlet of padlets">
+<div class="list-group">
+  <h1 class="h1">Deine Padlets</h1>
+  <div *ngFor="let padlet of padlets" class="list-group-item">
     <!-- User ist angemeldet - öffentliche & private Padlets ausgeben -->
     <div *ngIf="authService.isLoggedIn()">
-      <a class="item bs-padlet-list-item"
-         [padlet]="padlet" [routerLink]="padlet.id.toString()">
-      </a>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <a class="bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+        </div>
+      </div>
     </div>
     <!-- User ist nicht angemeldet - nur öffentliche Padlets werden angezeigt -->
     <div *ngIf="authService.isLoggedOut()">
       <div *ngIf="padlet.is_public">
-        <a class="item bs-padlet-list-item"
-           [padlet]="padlet" [routerLink]="padlet.id.toString()">
-        </a>
+        <a class="bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
       </div>
     </div>
   </div>
 </div>
 
-
-<a class="ui tiny yellow labeled icon button" [routerLink]="['../admin']">
-  <i class="add icon"></i> Padlet erstellen
+<a class="btn btn-warning btn-sm" [routerLink]="['../admin']">
+  <i class="fas fa-plus"></i> Padlet erstellen
 </a>
