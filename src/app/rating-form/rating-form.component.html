@@ -2,28 +2,19 @@
 <form class="ui large form" [formGroup]="ratingForm"
       (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="entrie_id">
+  <input type="hidden" formControlName="user_id">
 
-  <div class="field">
-    <label>Rating</label>
-    <input formControlName="rating">
-    <div *ngIf="errors['rating']" class="ui negative message"> {{
-      errors['rating'] }} </div>
+  <div class="mb-3">
+    <label for="rating" class="form-label">Rating</label>
+    <input type="number" class="form-control" id="rating" formControlName="rating">
+    <div *ngIf="errors['rating']" class="text-danger">
+      {{ errors['rating'] }}
+    </div>
   </div>
 
-  <div class="field" [class.disabled]="true">
-    <label>ID des Eintrags</label>
-    <input formControlName="entrie_id">
-    <div *ngIf="errors['entrie_id']" class="ui negative message">{{
-      errors['entrie_id'] }} </div>
-  </div>
+  <br>
 
-  <div class="field" [class.disabled]="true">
-    <label>ID des Users</label>
-    <input formControlName="user_id">
-    <div *ngIf="errors['user_id']" class="ui negative message">{{
-      errors['user_id'] }} </div>
-  </div>
-
-  <button type="submit" class="ui button"
+  <button type="submit" class="btn btn-primary"
           [disabled]="ratingForm.invalid">Speichern</button>
 </form>

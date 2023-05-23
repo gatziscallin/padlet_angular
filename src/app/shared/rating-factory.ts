@@ -1,6 +1,5 @@
 import {Rating} from "./rating";
 import {User} from "./user";
-import {Entrie} from "./entrie";
 
 export class RatingFactory {
 

@@ -2,34 +2,28 @@
 <form class="ui large form" [formGroup]="padletForm"
       (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
-  <input type="hidden" formControlName="action" value="">
+  <input type="hidden" formControlName="user_id">
 
-  <div class="field">
-    <label>Padlet Name</label>
-    <input formControlName="name">
-    <div *ngIf="errors['name']" class="ui negative message"> {{
-      errors['name'] }} </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Bezeichnung des Padlets</label>
+    <input type="text" class="form-control" id="name" formControlName="name">
+    <div *ngIf="errors['name']" class="text-danger">
+      {{ errors['name'] }}
+    </div>
   </div>
 
-  <div class="field" [class.disabled]="true">
-    <label>Padlet ID</label>
-    <input formControlName="id">
-    <div *ngIf="errors['id']" class="ui negative message">{{
-      errors['id'] }} </div>
+  <div class="col-md-3">
+    <label for="status" class="form-label">Status (öffentlich/privat)</label>
+    <select class="form-select" id="status" formControlName="is_public">
+    <option selected>Wähle...</option>
+    <option value="1">öffentlich</option>
+    <option value="2">privat</option>
+    </select>
+    <div *ngIf="errors['is_public']" class="text-danger">{{ errors['is_public'] }}</div>
   </div>
 
-  <div class="field" [class.disabled]="padlet.user_id">
-    <label>Eigentümer*in ID</label>
-    <input formControlName="user_id">
-    <div *ngIf="errors['user_id']" class="ui negative message">{{
-      errors['user_id'] }} </div>
-  </div>
+  <br>
 
-  <div class="field">
-    <label>Status (öffentlich/privat)</label>
-    <input formControlName="is_public">
-  </div>
-
-  <button type="submit" class="ui button"
+  <button type="submit" class="btn btn-primary"
           [disabled]="padletForm.invalid">Speichern</button>
 </form>

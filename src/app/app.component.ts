@@ -15,7 +15,7 @@ export class AppComponent {
   /**
    * Angefragte Padlets erhalten
    */
-  constructor(private http: HttpClient, private authService: AuthenticationService){
+  constructor(private http: HttpClient, public authService: AuthenticationService){
     http.get<Padlet>('http://padlet.s2010456018.student.kwmhgb.at/padlets').subscribe(val => this.padlet = val);
   }
 

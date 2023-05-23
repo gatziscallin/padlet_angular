@@ -2,21 +2,19 @@
 <form class="ui large form" [formGroup]="commentForm"
       (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="entrie_id">
+  <input type="hidden" formControlName="user_id">
 
-  <div class="field">
-    <label>Kommentar</label>
-    <input formControlName="comment">
-    <div *ngIf="errors['comment']" class="ui negative message"> {{
-      errors['comment'] }} </div>
+  <div class="mb-3">
+    <label for="comment" class="form-label">Kommentar</label>
+    <textarea class="form-control" id="comment" rows="5" formControlName="comment"></textarea>
+    <div *ngIf="errors['comment']" class="text-danger">
+      {{ errors['comment'] }}
+    </div>
   </div>
 
-  <div class="field" [class.disabled]="true">
-    <label>ID des Eintrags</label>
-    <input formControlName="entrie_id">
-    <div *ngIf="errors['entrie_id']" class="ui negative message">{{
-      errors['entrie_id'] }} </div>
-  </div>
+  <br>
 
-  <button type="submit" class="ui button"
+  <button type="submit" class="btn btn-primary"
           [disabled]="commentForm.invalid">Speichern</button>
 </form>

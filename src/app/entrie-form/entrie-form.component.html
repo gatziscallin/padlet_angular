@@ -1,36 +1,26 @@
 <h1>Eintrag bearbeiten / erstellen</h1>
 <form class="ui large form" [formGroup]="entryForm" (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="user_id">
+  <input type="hidden" formControlName="padlet_id">
 
-  <div class="field">
-    <label>Titel</label>
-    <input type="text" formControlName="title">
-    <div *ngIf="errors['title']" class="ui negative message">{{ errors['title'] }}</div>
+  <div class="mb-3">
+    <label for="title" class="form-label">Titel des Padlets</label>
+    <input type="text" class="form-control" id="title" formControlName="title">
+    <div *ngIf="errors['title']" class="text-danger">
+      {{ errors['title'] }}
+    </div>
   </div>
 
-  <div class="field" [class.disabled]="true">
-    <label>ID</label>
-    <input type="text" formControlName="id">
-    <div *ngIf="errors['id']" class="ui negative message">{{ errors['id'] }}</div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea class="form-control" id="content" rows="8" formControlName="content"></textarea>
+    <div *ngIf="errors['content']" class="text-danger">
+      {{ errors['content'] }}
+    </div>
   </div>
 
-  <div class="field">
-    <label>Inhalt</label>
-    <input type="text" formControlName="content">
-    <div *ngIf="errors['content']" class="ui negative message">{{ errors['content'] }}</div>
-  </div>
+  <br>
 
-  <div class="field" [class.disabled]="true">
-    <label>User ID</label>
-    <input type="text" formControlName="user_id">
-    <div *ngIf="errors['user_id']" class="ui negative message">{{ errors['user_id'] }}</div>
-  </div>
-
-  <div class="field" [class.disabled]="true">
-    <label>Padlet ID</label>
-    <input type="text" formControlName="padlet_id">
-    <div *ngIf="errors['padlet_id']" class="ui negative message">{{ errors['padlet_id'] }}</div>
-  </div>
-
-  <button type="submit" class="ui button" [disabled]="entryForm.invalid">Speichern</button>
+  <button type="submit" class="btn btn-primary" [disabled]="entryForm.invalid">Speichern</button>
 </form>

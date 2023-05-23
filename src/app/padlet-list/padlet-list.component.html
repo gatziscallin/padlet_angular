@@ -1,23 +1,33 @@
-<div class="list-group">
-  <h1 class="h1">Deine Padlets</h1>
-  <div *ngFor="let padlet of padlets" class="list-group-item">
-    <!-- User ist angemeldet - öffentliche & private Padlets ausgeben -->
-    <div *ngIf="authService.isLoggedIn()">
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <a class="bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
+<!-- CONTENT -->
+<section class="container-fluid py-3 scrollarea">
+  <h1 class="display-6 mb-0">Padlets</h1>
+  <hr class="my-4">
+  <div class="row mb-2 g-3">
+    <!-- PADLET ENTRY START -->
+    <ng-container *ngFor="let padlet of padlets">
+      <!-- User ist angemeldet - öffentliche & private Padlets ausgeben, nicht angemeldet => nur öffentliche ausgeben -->
+      <div *ngIf="authService.isLoggedIn() || (authService.isLoggedOut() && padlet.is_public)" class="col-md-4">
+        <div class="border rounded overflow-hidden" >
+          <div class="col p-4 d-flex flex-column position-relative">
+            <!-- PADLET NAME-->
+            <h3 class="mb-0">{{ padlet?.name }}</h3>
+            <!-- ERSTELLUNGSDATUM -->
+            <div class="my-2 text-body-secondary">
+                                <span class="me-2">
+                                    <i class="bi bi-calendar-plus"></i>
+                                  {{ padlet?.created_at | date:'dd.MM.yyyy' }}
+                                </span>
+              <span class="me-2">
+                                    <i class="bi bi-person-fill-add"></i>
+                {{ padlet?.user?.firstName }} {{ padlet?.user?.lastName }}
+                                </span>
+            </div>
+            <a [routerLink]="['/padlets', padlet?.id]" class="stretched-link">zu den Padlet-Details</a>
+          </div>
+
         </div>
       </div>
-    </div>
-    <!-- User ist nicht angemeldet - nur öffentliche Padlets werden angezeigt -->
-    <div *ngIf="authService.isLoggedOut()">
-      <div *ngIf="padlet.is_public">
-        <a class="bs-padlet-list-item" [padlet]="padlet" [routerLink]="padlet.id.toString()"></a>
-      </div>
-    </div>
+    </ng-container>
+    <!-- PADLET ENTRY ENDE -->
   </div>
-</div>
-
-<a class="btn btn-warning btn-sm" [routerLink]="['../admin']">
-  <i class="fas fa-plus"></i> Padlet erstellen
-</a>
+</section>

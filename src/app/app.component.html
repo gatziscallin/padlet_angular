@@ -1,10 +1,52 @@
-<div class="ui {{ isLoggedIn()?'three':'two'}} item tabs menu">
+<!--div class="ui {{ isLoggedIn()?'three':'two'}} item tabs menu">
   <a routerLink="padlets" routerLinkActive="active" class="item">Padlets</a>
   <a *ngIf="isLoggedIn()" routerLink="admin" routerLinkActive="active" class="item">Administration</a>
   <a routerLink="login" routerLinkActive="active" class="item">{{getLoginLabel()}}</a>
+</div-->
+
+<!-- NAVIGATION START -->
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+  <!-- ROUTE zu Padlets (HOME) -->
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+    <i class="bi bi-trello"></i>
+    <span class="fs-4 ms-2">Padlets</span>
+  </a>
+
+  <hr>
+
+  <!-- Navigation -->
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <!-- ROUTE ZU PADLET -->
+      <a [routerLink]="['/padlets']" class="nav-link active" aria-current="page">
+        <i class="bi bi-house"></i>
+        Home
+      </a>
+    </li>
+    <li>
+      <!-- ROUTE ZU ADMINISTRATION -->
+      <a [routerLink]="['/admin']" class="nav-link link-body-emphasis">
+        <i class="bi bi-plus-square"></i>
+        Padlet erstellen
+      </a>
+    </li>
+  </ul>
+
+  <hr>
+
+  <a *ngIf="authService.isLoggedIn()" class="d-block btn btn-danger" [routerLink]="['/login']">
+    <i class="bi bi-heartbreak"></i>
+    Abmelden
+  </a>
+
+  <a *ngIf="authService.isLoggedOut()" class="d-block btn btn-primary" [routerLink]="['/login']">
+    <i class="bi bi-heart"></i>
+    Anmelden
+  </a>
 </div>
+<!-- NAVIGATION ENDE -->
 
 
-<div class="ui container">
+<section class="container-fluid py-3 scrollarea">
   <router-outlet></router-outlet>
-</div>
+</section>
