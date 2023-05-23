@@ -143,7 +143,7 @@
               </div>
             </div>
 
-            <div *ngIf="entry.comments.length > 0" class="list-group">
+            <div *ngIf="entry.comments" class="list-group">
               <div *ngFor="let comment of entry.comments" class="list-group-item list-group-item-action d-flex gap-3 py-3">
                 <img src="{{ comment.user.image }}" alt="Foto von {{ comment.user.firstName }} {{ comment.user.lastName }}" class="rounded-circle flex-shrink-0" width="32" height="32">
                 <div class="d-flex gap-2 w-100 justify-content-between">
@@ -172,7 +172,7 @@
               </div>
             </div>
 
-            <div *ngIf="entry.ratings.length > 0" class="list-group">
+            <div *ngIf="entry.ratings" class="list-group">
               <div *ngFor="let rating of entry.ratings" class="list-group-item list-group-item-action d-flex gap-3 py-3">
                 <img src="{{ rating.user.image }}" alt="Foto von {{ rating.user.firstName }} {{ rating.user.lastName }}" class="rounded-circle flex-shrink-0" width="32" height="32">
                 <div class="d-flex gap-2 w-100 justify-content-between">

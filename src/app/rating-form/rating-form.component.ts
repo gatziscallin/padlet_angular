@@ -60,7 +60,7 @@ export class RatingFormComponent {
       id:this.rating.id,
       user_id: [1, Validators.required],
       entrie_id: [this.route.snapshot.params["entrie_id"], Validators.required],
-      rating: [this.rating.rating, Validators.required]
+      rating: [this.rating.rating, [Validators.required, Validators.min(1), Validators.max(5)]]
     });
     // Bei Änderungen wird die Methode updateErrorMessages() aufgerufen, um eventuelle
     // Fehlermeldungen zu aktualisieren
